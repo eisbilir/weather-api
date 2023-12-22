@@ -1,0 +1,348 @@
+{
+  "info": {
+    "_postman_id": "a0597e30-2172-444d-bdba-bb2386e3ef59",
+    "name": "Weather API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "14138228"
+  },
+  "item": [
+    {
+      "name": "Theme",
+      "item": [
+        {
+          "name": "Get theme successfully",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/theme?lang=en",
+              "host": ["{{URL}}"],
+              "path": ["theme"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "en"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get theme with wrong locale",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "    const response = pm.response.json()\r",
+                  "    pm.expect(response.message).to.eq(\"\\\"criteria.lang\\\" must be [en]\")\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/theme?lang=tr",
+              "host": ["{{URL}}"],
+              "path": ["theme"],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "tr"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get theme with wrong param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "    const response = pm.response.json()\r",
+                  "    pm.expect(response.message).to.eq(\"\\\"criteria.x\\\" is not allowed\")\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/theme?x=en",
+              "host": ["{{URL}}"],
+              "path": ["theme"],
+              "query": [
+                {
+                  "key": "x",
+                  "value": "en"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Weather",
+      "item": [
+        {
+          "name": "Get forecast successfully",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/weather?city=Paris&startDate=2023-12-18&endDate=2023-12-30",
+              "host": ["{{URL}}"],
+              "path": ["weather"],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "Paris"
+                },
+                {
+                  "key": "startDate",
+                  "value": "2023-12-18"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2023-12-30"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get forecast with missing parameter 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "    const response = pm.response.json()\r",
+                  "    pm.expect(response.message).to.eq(\"\\\"criteria.city\\\" is required\")\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/weather",
+              "host": ["{{URL}}"],
+              "path": ["weather"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get forecast with missing parameter 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "    const response = pm.response.json()\r",
+                  "    pm.expect(response.message).to.eq(\"\\\"criteria.startDate\\\" is required\")\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/weather?city=New Delhi",
+              "host": ["{{URL}}"],
+              "path": ["weather"],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "New Delhi"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get forecast with invalid city",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "    const response = pm.response.json()\r",
+                  "    pm.expect(response.message).to.eq(\"\\\"criteria.city\\\" must be one of [New Delhi, Istanbul, New York, Paris]\")\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/weather?city=Ankara&startDate=2023-12-18&endDate=2023-12-30",
+              "host": ["{{URL}}"],
+              "path": ["weather"],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "Ankara"
+                },
+                {
+                  "key": "startDate",
+                  "value": "2023-12-18"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2023-12-30"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get forecast with invalid start date 1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "    const response = pm.response.json()\r",
+                  "    pm.expect(response.message).to.include(\"\\\"criteria.startDate\\\" must be between \")\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/weather?city=Istanbul&startDate=2023-10-18&endDate=2023-12-30",
+              "host": ["{{URL}}"],
+              "path": ["weather"],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "Istanbul"
+                },
+                {
+                  "key": "startDate",
+                  "value": "2023-10-18"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2023-12-30"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get forecast with invalid start date 2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400', function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "    const response = pm.response.json()\r",
+                  "    pm.expect(response.message).to.eq(\"\\\"criteria.endDate\\\" must be greater than or equal to \\\"ref:startDate\\\"\")\r",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/weather?city=Istanbul&startDate=2023-12-25&endDate=2023-12-24",
+              "host": ["{{URL}}"],
+              "path": ["weather"],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "Istanbul"
+                },
+                {
+                  "key": "startDate",
+                  "value": "2023-12-25"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2023-12-24"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+version: '3'
+services:
+  weather-api:
+    image: weather-api:latest
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    volumes:
+      - ../data:/usr/src/app/data
+  postgres:
+    container_name: weather-postgres
+    image: postgres:14.1
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ../postgres-data:/var/lib/postgresql/data

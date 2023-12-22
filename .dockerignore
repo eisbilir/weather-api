@@ -1,0 +1,15 @@
+# Versioning and metadata
+.git
+.gitignore
+.dockerignore
+
+# Build dependencies
+node_modules
+
+# Files not required
+.editorconfig
+Dockerfile*
+README.md
+.eslintrc.yml
+postgres-data
+postgres-data-local

@@ -1,0 +1,121 @@
+openapi: 3.0.3
+info:
+  title: Weather API
+  description: Weather forecast service
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api/v1
+tags:
+  - name: Theme
+  - name: Weather
+paths:
+  /theme:
+    get:
+      tags:
+        - Theme
+      description: Get the predefined content to be used in UI based on the language
+      parameters:
+        - in: query
+          name: lang
+          required: false
+          schema:
+            type: string
+            example: en
+            default: en
+      responses:
+        200:
+          description: List of the content
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Theme"
+        400:
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /weather:
+    get:
+      tags:
+        - Weather
+      description: Get the forecast
+      parameters:
+        - in: query
+          name: city
+          required: true
+          schema:
+            type: string
+            example: New York
+        - in: query
+          name: startDate
+          required: true
+          schema:
+            type: string
+            format: date
+            example: 2023-12-20
+        - in: query
+          name: endDate
+          required: true
+          schema:
+            type: string
+            format: date
+            example: 2023-12-25
+      responses:
+        200:
+          description: the forecast
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Forecast"
+        400:
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Theme:
+      required:
+        - temp
+        - city
+      properties:
+        temp:
+          type: array
+          description: temperature format
+          items:
+            type: string
+        city:
+          type: array
+          items:
+            type: string
+    Forecast:
+      required:
+        - guid
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        city:
+          type: string
+        date:
+          type: string
+          format: date
+        tempC:
+          type: number
+          format: double
+        tempF:
+          type: number
+          format: double
+    Error:
+      required:
+        - message
+      properties:
+        message:
+          type: string

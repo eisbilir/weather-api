@@ -1,0 +1,12 @@
+version: "3"
+services:
+  postgres:
+    container_name: weather-postgres
+    image: postgres:14.1
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ../postgres-data-local:/var/lib/postgresql/data
